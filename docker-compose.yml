@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: backend
+    env_file:
+      - ./backend/.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  frontend:
+    build: ./mental-health-frontend
+    container_name: frontend
+    ports:
+      - "3000:80"
+
+  db:
+    image: mysql:8
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: mental_health_db
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
